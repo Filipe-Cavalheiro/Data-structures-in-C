@@ -2,40 +2,37 @@
 
 // Define the binary tree node structure
 struct _binaryTree {
-    int data;
-    struct _binaryTree* parent;
+    void* data;
     struct _binaryTree* left;
     struct _binaryTree* right;
 } ;
 
 // Function to create a new node
-binaryTree makeBinaryTree(binaryTree parent, int data) {
+binaryTree makeBinaryTree(void* data) {
     binaryTree newNode = (binaryTree)malloc(sizeof(struct _binaryTree));
     if (newNode == NULL) {
         perror("Memory allocation failed");
         exit(EXIT_FAILURE);
     }
     newNode->data = data;
-    newNode->parent = parent;
     newNode->left = NULL;
     newNode->right = NULL;
     return newNode;
 }
 
-int getElem_bt(binaryTree tree){
+void* getElem_bt(binaryTree tree){
     return tree->data;
 }
 
 // Function to insert a new node into the tree
-binaryTree insert_bt(binaryTree root, int data) {
+binaryTree insert_bt(binaryTree root, void* data, int (*getData)(void *)) {
     if (root == NULL) {
-        return makeBinaryTree(root, data);
+        return makeBinaryTree(data);
     }
-
-    if (data <= root->data) {
-        root->left = insert_bt(root->left, data);
-    } else if (data > root->data) {
-        root->right = insert_bt(root->right, data);
+    if (getData(data) <= getData(root->data)) {
+        root->left = insert_bt(root->left, data, getData);
+    } else if (getData(data) > getData(root->data)) {
+        root->right = insert_bt(root->right, data, getData);
     }
 
     return root;
@@ -49,7 +46,7 @@ binaryTree findMin(binaryTree node) {
     return node;
 }
 
-// Function to find the minimum value node in a tree
+// Function to find the maximum value node in a tree
 binaryTree findMax(binaryTree node) {
     while (node->right != NULL) {
         node = node->right;
@@ -58,15 +55,15 @@ binaryTree findMax(binaryTree node) {
 }
 
 // Function to remove a node from the tree
-binaryTree removeNode(binaryTree root, int data) {
+binaryTree removeNode_bt(binaryTree root, void* data, int (*getData)(void *)) {
     if (root == NULL) {
         return root;
     }
 
-    if (data <= root->data) {
-        root->left = removeNode(root->left, data);
-    } else if (data > root->data) {
-        root->right = removeNode(root->right, data);
+    if (getData(data) < getData(root->data)) {
+        root->left = removeNode_bt(root->left, data, getData);
+    } else if (getData(data) > getData(root->data)) {
+        root->right = removeNode_bt(root->right, data, getData);
     } else {
         // binaryTree with only one child or no child
         if (root->left == NULL) {
@@ -86,9 +83,24 @@ binaryTree removeNode(binaryTree root, int data) {
         root->data = temp->data;
 
         // Delete the inorder successor
-        root->right = removeNode(root->right, temp->data);
+        root->right = removeNode_bt(root->right, temp->data, getData);
     }
 
+    return root;
+}
+
+binaryTree removeMinNode(binaryTree root) {
+    if (root == NULL) {
+        return NULL;
+    }
+
+    if (root->left == NULL) {
+        binaryTree rightChild = root->right;
+        free(root);
+        return rightChild;
+    }
+
+    root->left = removeMinNode(root->left);
     return root;
 }
 
@@ -101,15 +113,15 @@ void freeTree(binaryTree root) {
     }
 }
 
-void printTree(binaryTree root, int level) {
-    if (root == NULL) {
+void print_bt(binaryTree root, int level, int (*getData)(void *)) {
+    if (root == NULL){
         return;
     }
 
-    printTree(root->right, level + 1);
+    print_bt(root->right, level + 1, getData);
 
-    printf("%d\n", root->data);
-
-    printTree(root->left, level + 1);
+    printf("%d\n", getData(root->data));
+    
+    print_bt(root->left, level + 1, getData);
 }
 

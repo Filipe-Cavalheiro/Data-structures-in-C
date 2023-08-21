@@ -6,19 +6,26 @@
 typedef struct _binaryTree *binaryTree;
 #include "binaryTree.c"
 
-binaryTree makeBinaryTree(binaryTree parent, int data);
+binaryTree makeBinaryTree(void* data);
+
+void* getElem_bt(binaryTree tree);
 
 // Function to insert a new node into the tree
-binaryTree insert_bt(binaryTree root, int data);
+binaryTree insert_bt(binaryTree root, void* data, int (*getData)(void *));
 
 // Function to find the minimum value node in a tree
 binaryTree findMin(binaryTree node);
 
+// Function to find the maximum value node in a tree
+binaryTree findMax(binaryTree node);
+
 // Function to remove a node from the tree
-binaryTree removeNode(binaryTree root, int data);
+binaryTree removeNode_bt(binaryTree root, void* data, int (*getData)(void *));
+
+binaryTree removeMinNode(binaryTree root);
 
 // Function to deallocate memory of the tree
 void freeTree(binaryTree root);
 
-void printTree(binaryTree root, int level);
+void print_bt(binaryTree root, int level, int(*getData)(void *));
 #endif /* HASHTABLE_H */
