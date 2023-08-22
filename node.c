@@ -36,7 +36,7 @@ node prevNode(node aux){
     return aux->previous;
 }
 
-void* getElem(node aux){
+void* getElem_node(node aux){
     return aux->elem;
 }
 

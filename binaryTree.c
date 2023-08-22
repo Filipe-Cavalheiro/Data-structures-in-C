@@ -90,11 +90,16 @@ binaryTree removeNode_bt(binaryTree root, void* data, int (*getData)(void *)) {
 }
 
 binaryTree removeMinNode(binaryTree root) {
-    if (root == NULL) {
+    if (root == NULL){
         return NULL;
     }
 
     if (root->left == NULL) {
+        if(root->right == NULL){
+            binaryTree tmp = makeBinaryTree(root->data);
+            root = NULL;
+            return tmp;
+        }
         binaryTree rightChild = root->right;
         free(root);
         return rightChild;
@@ -105,7 +110,7 @@ binaryTree removeMinNode(binaryTree root) {
 }
 
 // Function to deallocate memory of the tree
-void freeTree(binaryTree root) {
+void freeTree(binaryTree root){
     if (root != NULL) {
         freeTree(root->left);
         freeTree(root->right);

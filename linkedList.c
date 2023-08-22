@@ -44,7 +44,7 @@ void* popList(linkedList list){
     if(list->head == NULL)
         return NULL;
     node aux = list->head;
-    int* elem = getElem(aux);
+    int* elem = getElem_node(aux);
     list->head = nextNode(aux);
     destroyNode(aux);
     --list->nElems;
@@ -174,9 +174,9 @@ node existElem(linkedList list, char *name, char *(*getName)(void *)){
     node aux = list->head;
     node aux2 = list->tail;
     for (int i = 0; i < list->nElems / 2 + 1; ++i){
-        if (!strcmp(name, getName(getElem(aux))))
+        if (!strcmp(name, getName(getElem_node(aux))))
             return aux;
-        else if (!strcmp(name, getName(getElem(aux2))))
+        else if (!strcmp(name, getName(getElem_node(aux2))))
             return aux2;
 
         aux = nextNode(aux);
@@ -188,7 +188,7 @@ node existElem(linkedList list, char *name, char *(*getName)(void *)){
 void print_ll(linkedList list){
     node aux = list->head;
     while (aux != NULL){
-        printf("%d ", *(int*)getElem(aux));
+        printf("%d ", *(int*)getElem_node(aux));
         aux = nextNode(aux);
     }
 }

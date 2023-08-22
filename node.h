@@ -56,7 +56,7 @@ Parameters:
 Retorno: Element of the node
 Pre-condicoes: aux != NULL
 ***********************************************/
-void *getElem(node aux);
+void* getElem_node(node aux);
 
 /***********************************************
 setNextNode - changes the forward node this node points to.
