@@ -14,10 +14,10 @@ hashtable makeHashtable();
 unsigned int hash(int* key);
 
 // Function to insert a key-value pair into the hashtable
-void insert_ht(hashtable ht, int* key, int* value);
+void insert_ht(hashtable ht, int* key, void* value);
 
 // Function to retrieve the value associated with a key from the hashtable
-int* get(hashtable ht, int* key);
+void* getElem_ht(hashtable ht, int* key);
 
 // Function to remove a key-value pair from the hashtable
 void removeKey(hashtable ht, int* key);

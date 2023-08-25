@@ -1,11 +1,11 @@
 #include "binaryTree.h"
 
 // Define the binary tree node structure
-struct _binaryTree {
+typedef struct _binaryTree {
     void* data;
     struct _binaryTree* left;
     struct _binaryTree* right;
-} ;
+} *binaryTree;
 
 // Function to create a new node
 binaryTree makeBinaryTree(void* data) {
@@ -89,24 +89,21 @@ binaryTree removeNode_bt(binaryTree root, void* data, int (*getData)(void *)) {
     return root;
 }
 
-binaryTree removeMinNode(binaryTree root) {
+void putItNULL(binaryTree *root){
+    *root = NULL;
+}
+
+binaryTree removeMinNode(binaryTree* root) {
     if (root == NULL){
         return NULL;
     }
 
-    if (root->left == NULL) {
-        if(root->right == NULL){
-            binaryTree tmp = makeBinaryTree(root->data);
-            root = NULL;
-            return tmp;
-        }
-        binaryTree rightChild = root->right;
-        free(root);
-        return rightChild;
-    }
-
-    root->left = removeMinNode(root->left);
-    return root;
+    if ((*root)->left == NULL) {
+        binaryTree result = *root;
+        *root = (*root)->right;
+        return result;
+    }    
+    return removeMinNode(&(*root)->left);
 }
 
 // Function to deallocate memory of the tree

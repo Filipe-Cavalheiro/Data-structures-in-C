@@ -6,7 +6,7 @@
 // hashNode structure for the hashtable
 struct _hashNode{
     int key[2];
-    int value[2];
+    void* value;
     struct _hashNode* next;
 };
 
@@ -37,7 +37,7 @@ unsigned int hash(int* key){
 }
 
 // Function to insert a key-value pair into the hashtable
-void insert_ht(hashtable ht, int* key, int* value) {
+void insert_ht(hashtable ht, int* key, void* value) {
     unsigned int index = hash(key);
     hashNode newNode = (hashNode)malloc(sizeof(struct _hashNode));
     if (newNode == NULL) {
@@ -47,8 +47,7 @@ void insert_ht(hashtable ht, int* key, int* value) {
 
     newNode->key[0] = key[0];
     newNode->key[1] = key[1];
-    newNode->value[0] = value[0];
-    newNode->value[1] = value[1];
+    newNode->value = value;
     newNode->next = NULL;
 
     if (ht->table[index] == NULL) {
@@ -64,7 +63,7 @@ void insert_ht(hashtable ht, int* key, int* value) {
 }
 
 // Function to retrieve the value associated with a key from the hashtable
-int* get(hashtable ht, int* key) {
+void* getElem_ht(hashtable ht, int* key) {
     unsigned int index = hash(key);
     hashNode current = ht->table[index];
     while (current != NULL) {

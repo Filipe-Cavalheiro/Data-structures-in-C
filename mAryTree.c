@@ -2,21 +2,25 @@
 
 struct _mAryTreeNode{
     int value;
+    struct _mAryTreeNode* parent;
     linkedList children;
 };
 
-mAryTreeNode makeMAryTreeNode(int val){
+mAryTreeNode makeMAryTreeNode(int val, mAryTreeNode parent){
     mAryTreeNode tree = (mAryTreeNode)malloc(sizeof(struct _mAryTreeNode));
     if(tree == NULL){
         perror("mAryTreeNode created with value NULL\n");
         return NULL;
     }
     tree->value = val;
+    tree->parent = parent;
     tree->children = makeLinkedList();
     return tree;
 } 
 
 mAryTreeNode makeInsert_mAry(mAryTreeNode parent, int elem){
+    if(parent == NULL)
+        return parent;
     mAryTreeNode node = makeMAryTreeNode(elem);
     append(parent->children, node);
     return node;
@@ -32,6 +36,10 @@ int getElem_mAry(mAryTreeNode tree){
 
 linkedList getChildren(mAryTreeNode tree){
     return tree->children;
+}
+
+mAryTreeNode getParent(mAryTreeNode tree){
+    return tree->parent;
 }
 
 void printChilldren(mAryTreeNode parent){
