@@ -12,8 +12,10 @@ struct _linkedList{
 
 linkedList makeLinkedList(){
     linkedList list = (linkedList)malloc(sizeof(struct _linkedList));
-    if (list == NULL)
-        return NULL;
+    if (list == NULL){
+        perror("Failed to allocate memory for a new linkedlist");
+        exit(EXIT_FAILURE);
+    }
     list->head = NULL;
     list->tail = NULL;
     list->nElems = 0;
@@ -44,25 +46,24 @@ void* popList(linkedList list){
     if(list->head == NULL)
         return NULL;
     node aux = list->head;
-    int* elem = getElem_node(aux);
+    void* elem = getElem_node(aux);
     list->head = nextNode(aux);
     destroyNode(aux);
     --list->nElems;
     if (list->head != NULL) 
         setPrevNode(list->head, NULL);
-    return (void*) elem;
+    return elem;
 }
 
 void addHead(linkedList list, void *elem){
     node head = makeNode(elem);
     if (!list->nElems){
         list->tail = head;
-        goto skip;
     }
-    setNextNode(head, list->head);
-    setPrevNode(list->head, head);
-
-skip:
+    else{
+        setNextNode(head, list->head);
+        setPrevNode(list->head, head);
+    }
     list->head = head;
     ++list->nElems;
 }
@@ -150,7 +151,11 @@ int sizeList(linkedList list){
 }
 
 node getHead(linkedList list){
-    return (list->head);
+    return list->head;
+}
+
+node getTail(linkedList list){
+    return list->tail;
 }
 
 node removeIndex(linkedList list, int index){
@@ -166,7 +171,7 @@ node removeIndex(linkedList list, int index){
     node child = nextNode(aux);
     setPrevNode(child, parent);
     setNextNode(parent, child);
-    
+
     return aux;
 }
 
@@ -185,10 +190,11 @@ node existElem(linkedList list, char *name, char *(*getName)(void *)){
     return NULL;
 }
 
-void print_ll(linkedList list){
+void print_ll(linkedList list, void(*printFunc)(void *)){
     node aux = list->head;
     while (aux != NULL){
-        printf("%d ", *(int*)getElem_node(aux));
+        void* data = getElem_node(aux);
+        printFunc(data);
         aux = nextNode(aux);
     }
 }

@@ -39,7 +39,7 @@ Parameters:
 	list - sequence to get head
 Return: elem of head
 pre-conditions: list != NULL
-***********************************************/
+list, newNode***********************************************/
 void* popList(linkedList list);
 
 /***********************************************
@@ -96,10 +96,19 @@ int sizeList(linkedList list);
 getHead - obtains the head of the given list.
 Parameters:
 	list - sequence
-Return:
+Return: the Head node
 pre-conditions: list != NULL
 ***********************************************/
 node getHead(linkedList list);
+
+/***********************************************
+getTail - obtains the tail of the given list.
+Parameters:
+	list - sequence
+Return: the Tail node
+pre-conditions: list != NULL
+***********************************************/
+node getTail(linkedList list);
 
 /***********************************************
 removeIndex - removes node at certain index.

@@ -25,7 +25,7 @@ void* getElem_bt(binaryTree tree){
 }
 
 // Function to insert a new node into the tree
-binaryTree insert_bt(binaryTree root, void* data, int (*getData)(void *)) {
+binaryTree insert_bt(binaryTree root, void* data, float (*getData)(void *)) {
     if (root == NULL) {
         return makeBinaryTree(data);
     }

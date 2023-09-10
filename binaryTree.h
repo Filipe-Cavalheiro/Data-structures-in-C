@@ -12,7 +12,7 @@ void* getElem_bt(binaryTree tree);
 void putItNULL(binaryTree *root);
 
 // Function to insert a new node into the tree
-binaryTree insert_bt(binaryTree root, void* data, int (*getData)(void *));
+binaryTree insert_bt(binaryTree root, void* data, float (*getData)(void *));
 
 // Function to find the minimum value node in a tree
 binaryTree findMin(binaryTree node);

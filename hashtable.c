@@ -19,7 +19,7 @@ struct _hashtable {
 hashtable makeHashtable() {
     hashtable ht = (hashtable)malloc(sizeof(struct _hashtable));
     if (ht == NULL) {
-        perror("Failed to allocate memory for the hashtable");
+        perror("Failed to allocate memory for the hashtable\n");
         exit(EXIT_FAILURE);
     }
 
@@ -41,7 +41,7 @@ void insert_ht(hashtable ht, int* key, void* value) {
     unsigned int index = hash(key);
     hashNode newNode = (hashNode)malloc(sizeof(struct _hashNode));
     if (newNode == NULL) {
-        perror("Failed to allocate memory for a new node");
+        perror("Failed to allocate memory for a new hashtable node\n");
         exit(EXIT_FAILURE);
     }
 
